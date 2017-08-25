@@ -16,7 +16,9 @@
 
 package org.gradle.language.swift
 
+import groovy.io.FileType
 import org.gradle.nativeplatform.fixtures.AbstractInstalledToolChainIntegrationSpec
+import org.gradle.nativeplatform.fixtures.app.IncrementalSwiftStaleCompileOutputApp
 import org.gradle.nativeplatform.fixtures.app.SwiftApp
 import org.gradle.nativeplatform.fixtures.app.SwiftAppWithLibraries
 import org.gradle.nativeplatform.fixtures.app.SwiftAppWithLibrary
@@ -81,6 +83,44 @@ class SwiftExecutableIntegrationTest extends AbstractInstalledToolChainIntegrati
 
         executable("build/exe/main/release/App").assertExists()
         executable("build/exe/main/release/App").exec().out == app.expectedOutput
+    }
+
+    def "stale object files are removed"() {
+        settingsFile << "rootProject.name = 'app'"
+        def app = new IncrementalSwiftStaleCompileOutputApp()
+
+        given:
+        app.writeToProject(testDirectory)
+
+        and:
+        buildFile << """
+            apply plugin: 'swift-executable'
+         """
+
+        and:
+        succeeds "assemble"
+        app.applyChangesToProject(testDirectory)
+
+        expect:
+        succeeds "assemble"
+        result.assertTasksExecuted(":compileDebugSwift", ":linkDebug", ":installMain", ":assemble")
+        result.assertTasksNotSkipped(":compileDebugSwift", ":linkDebug", ":installMain", ":assemble")
+
+        files("build/obj/main")*.name as Set == app.alternateApp.expectedIntermediateFilenames
+        executable("build/exe/main/debug/App").assertExists()
+        installation("build/install/App").exec().out == app.expectedAlternateOutput
+    }
+
+    List<File> files(Object path) {
+        File directory = file(path)
+        directory.assertIsDir()
+
+        def result = []
+        directory.eachFileRecurse(FileType.FILES) {
+            result += it
+        }
+
+        return result
     }
 
     def "ignores non-Swift source files in source directory"() {

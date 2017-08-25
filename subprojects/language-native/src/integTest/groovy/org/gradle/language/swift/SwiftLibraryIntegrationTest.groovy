@@ -16,6 +16,7 @@
 
 package org.gradle.language.swift
 
+import groovy.io.FileType
 import org.gradle.nativeplatform.fixtures.AbstractInstalledToolChainIntegrationSpec
 import org.gradle.nativeplatform.fixtures.app.SwiftAppWithLibraries
 import org.gradle.nativeplatform.fixtures.app.SwiftLib
@@ -76,6 +77,54 @@ class SwiftLibraryIntegrationTest extends AbstractInstalledToolChainIntegrationS
         succeeds "linkRelease"
         result.assertTasksExecuted(":compileReleaseSwift", ":linkRelease")
         sharedLibrary("build/lib/main/release/Hello").assertExists()
+    }
+
+    def "stale object files are removed"() {
+        def lib = new SwiftLib()
+        settingsFile << "rootProject.name = 'hello'"
+
+        given:
+        lib.writeToProject(testDirectory)
+
+        and:
+        buildFile << """
+            apply plugin: 'swift-library'
+         """
+
+        and:
+        succeeds "assemble"
+        file(lib.multiply.sourceFile.withPath("src/main")).delete()
+        file(lib.greeter.sourceFile.withPath("src/main")).renameTo(file("src/main/swift/renamed-greeter.swift"))
+
+        expect:
+        succeeds "assemble"
+        result.assertTasksExecuted(":compileDebugSwift", ":linkDebug", ":assemble")
+        result.assertTasksNotSkipped(":compileDebugSwift", ":linkDebug", ":assemble")
+
+
+        files("build/obj/main")*.name as Set == (toSwiftIntermediateFiles('src/main/swift') + ['Hello.swiftdoc', 'Hello.swiftmodule', 'output-file-map.json']) as Set
+        sharedLibrary("build/lib/main/debug/Hello").assertExists()
+    }
+
+    Set<String> swiftTempFiles(String sourceFilename) {
+        def name = sourceFilename.replace('.swift', '')
+        ['.o', '~partial.swiftdoc', '~partial.swiftmodule'].collect { name + it }
+    }
+
+    Set<String> toSwiftIntermediateFiles(Object path) {
+        files(path).collect { swiftTempFiles(it.name) }.flatten()
+    }
+
+    Set<File> files(Object path) {
+        File directory = file(path)
+        directory.assertIsDir()
+
+        def result = [] as Set
+        directory.eachFileRecurse(FileType.FILES) {
+            result += it
+        }
+
+        return result
     }
 
     def "build logic can change source layout convention"() {
