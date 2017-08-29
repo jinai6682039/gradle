@@ -17,14 +17,12 @@
 package org.gradle.api
 
 import org.gradle.integtests.fixtures.AbstractIntegrationSpec
-import org.gradle.integtests.fixtures.FluidDependenciesResolveRunner
+
 import org.gradle.integtests.fixtures.executer.GradleContextualExecuter
 import org.gradle.integtests.fixtures.executer.ProjectLifecycleFixture
 import org.junit.Rule
-import org.junit.runner.RunWith
 import spock.lang.IgnoreIf
 
-@RunWith(FluidDependenciesResolveRunner)
 class ConfigurationOnDemandIntegrationTest extends AbstractIntegrationSpec {
 
     @Rule ProjectLifecycleFixture fixture = new ProjectLifecycleFixture(executer, temporaryFolder)

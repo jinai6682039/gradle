@@ -17,10 +17,7 @@
 package org.gradle.integtests.resolve
 
 import org.gradle.integtests.fixtures.AbstractHttpDependencyResolutionTest
-import org.gradle.integtests.fixtures.FluidDependenciesResolveRunner
-import org.junit.runner.RunWith
 
-@RunWith(FluidDependenciesResolveRunner)
 class ArtifactCollectionIntegrationTest extends AbstractHttpDependencyResolutionTest {
 
     def setup() {
@@ -194,13 +191,8 @@ class Main {
         fails "verify"
 
         then:
-        if (FluidDependenciesResolveRunner.isFluid()) {
-            failure.assertHasDescription("Could not determine the dependencies of task ':verify'.")
-            failure.assertHasCause("Could not resolve all task dependencies for configuration ':compile'.")
-            failure.assertHasCause("Could not find org:does-not-exist:1.0.")
-        } else {
-            failure.assertHasDescription("Could not resolve all files for configuration ':compile'.")
-            failure.assertHasCause("Could not find org:does-not-exist:1.0.")
-        }
+        failure.assertHasDescription("Could not determine the dependencies of task ':verify'.")
+        failure.assertHasCause("Could not resolve all task dependencies for configuration ':compile'.")
+        failure.assertHasCause("Could not find org:does-not-exist:1.0.")
     }
 }

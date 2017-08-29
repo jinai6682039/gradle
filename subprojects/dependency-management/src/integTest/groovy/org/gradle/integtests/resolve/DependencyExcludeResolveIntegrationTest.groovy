@@ -17,12 +17,9 @@
 package org.gradle.integtests.resolve
 
 import org.gradle.integtests.fixtures.AbstractDependencyResolutionTest
-import org.gradle.integtests.fixtures.FluidDependenciesResolveRunner
-import org.junit.runner.RunWith
 import spock.lang.Issue
 import spock.lang.Unroll
 
-@RunWith(FluidDependenciesResolveRunner)
 class DependencyExcludeResolveIntegrationTest extends AbstractDependencyResolutionTest {
     /**
      * Dependency exclude rules defined through Gradle DSL.

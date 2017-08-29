@@ -17,10 +17,7 @@
 package org.gradle.integtests.resolve
 
 import org.gradle.integtests.fixtures.AbstractDependencyResolutionTest
-import org.gradle.integtests.fixtures.FluidDependenciesResolveRunner
-import org.junit.runner.RunWith
 
-@RunWith(FluidDependenciesResolveRunner)
 class FilteredConfigurationIntegrationTest extends AbstractDependencyResolutionTest {
     def "can query files for filtered first level dependencies"() {
         mavenRepo.module("group", "test1", "1.0").publish()

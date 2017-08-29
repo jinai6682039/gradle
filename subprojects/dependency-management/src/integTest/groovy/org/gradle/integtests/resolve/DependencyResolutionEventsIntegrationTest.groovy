@@ -15,11 +15,9 @@
  */
 package org.gradle.integtests.resolve
 
-import org.gradle.integtests.fixtures.*
-import org.junit.runner.RunWith
+import org.gradle.integtests.fixtures.AbstractIntegrationSpec
 import spock.lang.Issue
 
-@RunWith(FluidDependenciesResolveRunner)
 class DependencyResolutionEventsIntegrationTest extends AbstractIntegrationSpec {
     def "fires exactly one beforeResolve and afterResolve event when configuration is resolved"() {
         given:

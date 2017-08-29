@@ -16,11 +16,8 @@
 package org.gradle.integtests.resolve
 
 import org.gradle.integtests.fixtures.AbstractHttpDependencyResolutionTest
-import org.gradle.integtests.fixtures.FluidDependenciesResolveRunner
-import org.junit.runner.RunWith
 import spock.lang.Unroll
 
-@RunWith(FluidDependenciesResolveRunner)
 class ResolvedConfigurationIntegrationTest extends AbstractHttpDependencyResolutionTest {
     def setup() {
         buildFile << """

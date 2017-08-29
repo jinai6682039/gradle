@@ -50,17 +50,6 @@ public interface ResolutionStrategyInternal extends ResolutionStrategy {
      */
     Action<DependencySubstitution> getDependencySubstitutionRule();
 
-    /**
-     * Used by tests to validate behaviour of the 'task graph modified' state
-     */
-    void assumeFluidDependencies();
-
-    /**
-     * Should the configuration be fully resolved to determine the task dependencies?
-     * If not, we do a shallow 'resolve' of SelfResolvingDependencies only.
-     */
-    boolean resolveGraphToDetermineTaskDependencies();
-
     SortOrder getSortOrder();
 
     DependencySubstitutionsInternal getDependencySubstitution();

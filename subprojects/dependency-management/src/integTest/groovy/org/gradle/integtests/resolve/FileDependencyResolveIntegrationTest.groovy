@@ -17,11 +17,8 @@
 package org.gradle.integtests.resolve
 
 import org.gradle.integtests.fixtures.AbstractDependencyResolutionTest
-import org.gradle.integtests.fixtures.FluidDependenciesResolveRunner
 import org.gradle.integtests.fixtures.resolve.ResolveTestFixture
-import org.junit.runner.RunWith
 
-@RunWith(FluidDependenciesResolveRunner)
 class FileDependencyResolveIntegrationTest extends AbstractDependencyResolutionTest {
     def resolve = new ResolveTestFixture(buildFile)
 

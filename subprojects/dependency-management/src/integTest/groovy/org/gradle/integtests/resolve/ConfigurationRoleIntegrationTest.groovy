@@ -17,11 +17,8 @@
 package org.gradle.integtests.resolve
 
 import org.gradle.integtests.fixtures.AbstractIntegrationSpec
-import org.gradle.integtests.fixtures.FluidDependenciesResolveRunner
-import org.junit.runner.RunWith
 import spock.lang.Unroll
 
-@RunWith(FluidDependenciesResolveRunner)
 class ConfigurationRoleIntegrationTest extends AbstractIntegrationSpec {
 
     @Unroll("cannot resolve a configuration with role #role at execution time")

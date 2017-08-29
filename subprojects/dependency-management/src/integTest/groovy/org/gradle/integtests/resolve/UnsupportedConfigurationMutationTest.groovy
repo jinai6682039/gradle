@@ -15,14 +15,12 @@
  */
 
 package org.gradle.integtests.resolve
+
 import org.gradle.integtests.fixtures.AbstractIntegrationSpec
-import org.gradle.integtests.fixtures.FluidDependenciesResolveRunner
 import org.gradle.test.fixtures.maven.MavenFileRepository
-import org.junit.runner.RunWith
 import spock.lang.Issue
 import spock.lang.Unroll
 
-@RunWith(FluidDependenciesResolveRunner)
 class UnsupportedConfigurationMutationTest extends AbstractIntegrationSpec {
 
     def "does not allow adding dependencies to a configuration that has been resolved"() {
@@ -135,9 +133,6 @@ class UnsupportedConfigurationMutationTest extends AbstractIntegrationSpec {
                 repositories {
                     maven { url "${mavenRepo.uri}" }
                 }
-                configurations.all {
-                    resolutionStrategy.assumeFluidDependencies()
-                }
             }
 
             project(":api") {
@@ -215,9 +210,6 @@ class UnsupportedConfigurationMutationTest extends AbstractIntegrationSpec {
                 apply plugin: "java"
                 repositories {
                     maven { url "${mavenRepo.uri}" }
-                }
-                configurations.all {
-                    resolutionStrategy.assumeFluidDependencies()
                 }
             }
 

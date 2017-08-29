@@ -18,11 +18,9 @@
 package org.gradle.integtests.resolve
 
 import org.gradle.integtests.fixtures.AbstractIntegrationSpec
-import org.gradle.integtests.fixtures.FluidDependenciesResolveRunner
-import org.gradle.test.fixtures.archive.JarTestFixture
-import org.junit.runner.RunWith
 
-@RunWith(FluidDependenciesResolveRunner)
+import org.gradle.test.fixtures.archive.JarTestFixture
+
 class VariantAwareResolutionWithConfigurationAttributesIntegrationTest extends AbstractIntegrationSpec {
 
     def setup() {

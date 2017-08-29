@@ -17,11 +17,8 @@
 package org.gradle.integtests.composite
 
 import org.gradle.integtests.fixtures.AbstractIntegrationSpec
-import org.gradle.integtests.fixtures.FluidDependenciesResolveRunner
-import org.junit.runner.RunWith
 import spock.lang.Unroll
 
-@RunWith(FluidDependenciesResolveRunner)
 class CompositeBuildConfigurationAttributesResolveIntegrationTest extends AbstractIntegrationSpec {
 
     def setup(){

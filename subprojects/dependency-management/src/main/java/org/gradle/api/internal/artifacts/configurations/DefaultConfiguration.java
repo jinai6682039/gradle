@@ -1247,10 +1247,9 @@ public class DefaultConfiguration extends AbstractFileCollection implements Conf
         @Override
         public void visitDependencies(final TaskDependencyResolveContext context) {
             synchronized (resolutionLock) {
-                if (getResolutionStrategy().resolveGraphToDetermineTaskDependencies()) {
-                    // Force graph resolution as this is required to calculate build dependencies
-                    resolveToStateOrLater(GRAPH_RESOLVED);
-                }
+                // Force graph resolution as this is required to calculate build dependencies
+                resolveToStateOrLater(GRAPH_RESOLVED);
+
                 ResolverResults results;
                 if (getState() == State.UNRESOLVED) {
                     // Traverse graph

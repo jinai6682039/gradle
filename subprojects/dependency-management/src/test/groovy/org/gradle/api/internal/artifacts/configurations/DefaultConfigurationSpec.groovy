@@ -342,7 +342,6 @@ class DefaultConfigurationSpec extends Specification {
         _ * resolver.resolveGraph(_, _) >> { ConfigurationInternal config, DefaultResolverResults resolverResults ->
             resolverResults.failed(failure)
         }
-        _ * resolutionStrategy.resolveGraphToDetermineTaskDependencies() >> true
 
         when:
         configuration.getBuildDependencies().getDependencies(null)
@@ -1065,9 +1064,6 @@ class DefaultConfigurationSpec extends Specification {
 
     def "can determine task dependencies when graph resolution is required"() {
         def config = conf("conf")
-
-        given:
-        _ * resolutionStrategy.resolveGraphToDetermineTaskDependencies() >> true
 
         when:
         config.getBuildDependencies().getDependencies(null)
