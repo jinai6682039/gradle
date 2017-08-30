@@ -24,7 +24,7 @@ import org.gradle.test.fixtures.ConcurrentTestUtil
  */
 class ContinuousBuildPlayReloadIntegrationTest extends AbstractPlayReloadIntegrationTest {
 
-    private int pendingChangesMarker
+    int pendingChangesMarker
 
     def setup() {
         buildFile << """
